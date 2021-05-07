@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+    database:
+        image: postgres:13
+        restart: always
+        container_name: database
+        env_file:
+            - 'dev.env'
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+    application:
+        build: .
+        env_file:
+            - 'dev.env'
+        depends_on:
+            - database
+        container_name: application
+        volumes:
+            - '~/.bash_history:/.bash_history'
+        ports:
+            - 3000:3000
+
+volumes:
+    pgdata:
