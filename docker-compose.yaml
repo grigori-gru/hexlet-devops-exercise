@@ -16,8 +16,6 @@ services:
         depends_on:
             - database
         container_name: application
-        volumes:
-            - '~/.bash_history:/.bash_history'
         ports:
             - 3000:3000
 
