@@ -2,7 +2,7 @@ start:
 	docker-compose up
 
 setup:
-	npm run install
+	npm install
 
 lint:
 	npm run lint
