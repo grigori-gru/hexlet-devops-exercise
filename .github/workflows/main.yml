@@ -39,7 +39,7 @@ jobs:
               run: make test-ci
 
             - name: Login to Heroku Container registry
-              run: heroku container:login
+              run: docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
 
             - name: Build and push
               run: heroku container:push -a ${{ env.HEROKU_APP_NAME }} web
