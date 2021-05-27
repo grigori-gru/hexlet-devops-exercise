@@ -1,6 +1,8 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export default (): { database: PostgresConnectionOptions } => {
+    // https://github.com/typeorm/typeorm/issues/278
+    // use script "heroku config:set PGSSLMODE=no-verify" to omit the ssl configuration
     const extraOptions: Omit<PostgresConnectionOptions, 'type'> = process.env
         .DATABASE_URL
         ? {
