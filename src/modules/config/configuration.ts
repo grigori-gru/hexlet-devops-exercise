@@ -1,9 +1,11 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export default (): { database: PostgresConnectionOptions } => {
-    const extraOptions = process.env.DATABASE_URL
+    const extraOptions: Omit<PostgresConnectionOptions, 'type'> = process.env
+        .DATABASE_URL
         ? {
               url: process.env.DATABASE_URL,
+              ssl: true,
           }
         : {
               host: process.env.DATABASE_HOST,
