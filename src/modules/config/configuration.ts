@@ -7,6 +7,7 @@ export default (): { database: PostgresConnectionOptions } => {
               url: process.env.DATABASE_URL,
               extra: {
                   ssl: true,
+                  rejectUnauthorized: false,
               },
           }
         : {
