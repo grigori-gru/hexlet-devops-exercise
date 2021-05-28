@@ -19,11 +19,16 @@ export default (
               username: process.env.POSTGRES_USER,
               password: process.env.POSTGRES_PASSWORD,
               database: process.env.POSTGRES_DB,
-              entities: [`${SOURCE_PATH}/modules/**/**.entity{.ts,.js}`],
-              migrations: runMigration ? [`src/migrations/*.ts`] : [],
-              synchronize: env === 'test',
-              dropSchema: env === 'test',
           };
 
-    return { database: { type: 'postgres', ...extraOptions } };
+    return {
+        database: {
+            type: 'postgres',
+            entities: [`${SOURCE_PATH}/modules/**/**.entity{.ts,.js}`],
+            migrations: runMigration ? [`src/migrations/*.ts`] : [],
+            synchronize: env === 'test',
+            dropSchema: env === 'test',
+            ...extraOptions,
+        },
+    };
 };
