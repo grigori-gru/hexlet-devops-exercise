@@ -1,6 +1,11 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
-export default (): { database: PostgresConnectionOptions } => {
+const env = process.env.NODE_ENV || 'development';
+const SOURCE_PATH = env === 'test' ? 'src' : 'dist';
+
+export default (
+    runMigration?: boolean,
+): { database: PostgresConnectionOptions } => {
     // https://github.com/typeorm/typeorm/issues/278
     // use script "heroku config:set PGSSLMODE=no-verify" to omit the ssl configuration
     const extraOptions: Omit<PostgresConnectionOptions, 'type'> = process.env
@@ -14,6 +19,10 @@ export default (): { database: PostgresConnectionOptions } => {
               username: process.env.POSTGRES_USER,
               password: process.env.POSTGRES_PASSWORD,
               database: process.env.POSTGRES_DB,
+              entities: [`${SOURCE_PATH}/modules/**/**.entity{.ts,.js}`],
+              migrations: runMigration ? [`src/migrations/*.ts`] : [],
+              synchronize: env === 'test',
+              dropSchema: env === 'test',
           };
 
     return { database: { type: 'postgres', ...extraOptions } };

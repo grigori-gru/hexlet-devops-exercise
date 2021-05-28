@@ -13,6 +13,7 @@ test-setup:
 
 test-ci:
 	$(MAKE) test-setup
+	docker-compose -f docker-compose.test.yaml run app npm run test:migration
 	docker-compose -f docker-compose.test.yaml run app npm run test
 
 test-watch:

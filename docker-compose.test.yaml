@@ -9,6 +9,7 @@ services:
             - 'test.env'
     app:
         image: node:14-alpine
+        container_name: app
         working_dir: /usr/src/app
         env_file:
             - test.env
